@@ -1,4 +1,5 @@
 import pygame
+# from gif_pygame import AnimatedGif 
 from grid import Grid
 from piece import Type
 
@@ -21,10 +22,12 @@ BLUE = (30, 144, 255)
 
 def draw_grid(grid):
     # loading pieces' images
-    imgBlue1 = pygame.image.load("src/media/Blue1.png")
-    imgBlue2 = pygame.image.load("src/media/Blue2.png")
-    imgRed1 = pygame.image.load("src/media/Red1.png")
-    imgRed2 = pygame.image.load("src/media/Red2.png")
+    imgBlue1 = [pygame.image.load(f"src/media/photos/BlueGif1_{i}.png") for i in range(2)]
+    imgBlue2 = [pygame.image.load(f"src/media/photos/BlueGif2_{i}.png") for i in range(2)]
+    imgRed1 = [pygame.image.load(f"src/media/photos/RedGif1_{i}.png") for i in range(2)]
+    imgRed2 = [pygame.image.load(f"src/media/photos/RedGif2_{i}.png") for i in range(2)]
+    imgBlank = [pygame.image.load(f"src/media/photos/BlankGif_{i}.png") for i in range(4)]
+
     
     # Top-left origin of the grid
     gx, gy = 50, 170
@@ -41,9 +44,10 @@ def draw_grid(grid):
                 img = imgRed1 if t == Type.O else imgBlue1
                 if age == 1:
                     img = imgRed2 if t == Type.O else imgBlue2
-                center_x = (col-1) * distance
-                center_y = (row-1) * distance
-                screen.blit(img, (center_x, center_y))
+                current_frame = int((pygame.time.get_ticks() // 650) % 2)
+                center_x = gx + (col) * distance
+                center_y = gy + (row) * distance
+                screen.blit(img[current_frame], (center_x, center_y))
                 
 
 def get_cell_from_mouse(pos):
@@ -78,8 +82,11 @@ def main():
     turn = 0
     running = True
     winner = None
-    img = pygame.image.load("src/media/background_pixel.png")
+    img = pygame.image.load("src/media/photos/background_pixel.png")
     background_img = pygame.transform.scale(img,(W_WIDTH,W_HEIGHT))
+    pygame.mixer.init()
+    sound = pygame.mixer.Sound("src/media/music/Vibing_Over_Venus.mp3")
+    sound.play(-1)
 
     while running:
         
