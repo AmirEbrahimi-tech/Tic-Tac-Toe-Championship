@@ -11,7 +11,7 @@ tiktaktoe-python
 │   ├── main.py          # Entry point of the application
 │   ├── grid.py          # Defines the game board and its functionalities
 │   ├── piece.py         # Defines the game pieces (X and O)
-│   └── types
+│   └── types_
 │       └── __init__.py  # Contains constants and enumerations related to the game
 ├── requirements.txt      # Lists the dependencies required for the project
 └── README.md             # Documentation for the project
